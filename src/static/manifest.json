@@ -1,6 +1,6 @@
 {
-  "name": "React Extension",
-  "description": "Chrome Extension in React!",
+  "name": "Weather  Extension",
+  "description": "Check daily weather easily with this extension",
   "version": "1.0.0",
   "manifest_version": 3,
   "icons": {
