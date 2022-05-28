@@ -6,6 +6,7 @@ import { WeatherCard } from './WatherCard';
 const App: React.FC<{}> = () => {
   return (
     <div>
+      <WeatherCard city="Delhi" />
       <WeatherCard city="Chandigarh" />
     </div>
   );
