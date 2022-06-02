@@ -10,13 +10,21 @@ import {
   Typography,
 } from '@mui/material';
 
-const WeatherCardContainer: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+const WeatherCardContainer: React.FC<{
+  children: React.ReactNode;
+  onDelete?: () => void;
+}> = ({ children, onDelete }) => {
   return (
     <Box mx={'4px'} my="16px">
       <Card>
         <CardContent>{children}</CardContent>
+        {onDelete && (
+          <CardActions>
+            <Button onClick={onDelete} size="small">
+              Delete
+            </Button>
+          </CardActions>
+        )}
       </Card>
     </Box>
   );
@@ -24,7 +32,10 @@ const WeatherCardContainer: React.FC<{ children: React.ReactNode }> = ({
 
 type WeatherCardState = 'LOADING' | 'ERROR' | 'READY';
 
-const WeatherCard: React.FC<{ city: string }> = ({ city }) => {
+const WeatherCard: React.FC<{ city: string; onDelete?: () => void }> = ({
+  city,
+  onDelete,
+}) => {
   const [weatherData, setWeatherData] = useState<OpenWeatherData | null>(null);
   const [cardState, setCardState] = useState<WeatherCardState>('LOADING');
 
@@ -45,7 +56,7 @@ const WeatherCard: React.FC<{ city: string }> = ({ city }) => {
 
   if (cardState === 'LOADING' || cardState === 'ERROR') {
     return (
-      <WeatherCardContainer>
+      <WeatherCardContainer onDelete={onDelete}>
         <Typography variant="body1">
           {cardState === 'LOADING'
             ? 'Loading...'
