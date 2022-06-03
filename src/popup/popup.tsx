@@ -20,6 +20,11 @@ const App: React.FC<{}> = () => {
     setCityInput('');
   }
 
+  function handleDelete(cityName: string) {
+    const newCities = cities.filter((city) => city !== cityName);
+    setCities(newCities);
+  }
+
   return (
     <Box mx="8px" my="16px">
       <Grid container>
@@ -39,7 +44,11 @@ const App: React.FC<{}> = () => {
         </Grid>
       </Grid>
       {cities.map((city) => (
-        <WeatherCard city={city} key={city} />
+        <WeatherCard
+          key={city}
+          city={city}
+          onDelete={() => handleDelete(city)}
+        />
       ))}
       <Box height="16px" />
     </Box>

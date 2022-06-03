@@ -20,7 +20,7 @@ const WeatherCardContainer: React.FC<{
         <CardContent>{children}</CardContent>
         {onDelete && (
           <CardActions>
-            <Button onClick={onDelete} size="small">
+            <Button color="secondary" onClick={onDelete} size="small">
               Delete
             </Button>
           </CardActions>
@@ -67,7 +67,7 @@ const WeatherCard: React.FC<{ city: string; onDelete?: () => void }> = ({
   }
 
   return (
-    <WeatherCardContainer>
+    <WeatherCardContainer onDelete={onDelete}>
       <Typography variant="h5">{city}</Typography>
       <Typography variant="body1">
         Temperature: {Math.round(weatherData.main.temp)}
