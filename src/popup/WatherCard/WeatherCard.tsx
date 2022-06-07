@@ -32,10 +32,11 @@ const WeatherCardContainer: React.FC<{
 
 type WeatherCardState = 'LOADING' | 'ERROR' | 'READY';
 
-const WeatherCard: React.FC<{ city: string; onDelete?: () => void }> = ({
-  city,
-  onDelete,
-}) => {
+const WeatherCard: React.FC<{
+  city: string;
+  onDelete?: () => void;
+  inCelsius: boolean;
+}> = ({ city, onDelete, inCelsius }) => {
   const [weatherData, setWeatherData] = useState<OpenWeatherData | null>(null);
   const [cardState, setCardState] = useState<WeatherCardState>('LOADING');
 
@@ -43,7 +44,7 @@ const WeatherCard: React.FC<{ city: string; onDelete?: () => void }> = ({
     {
       city;
     }
-    fetchOpenWeatherData(city)
+    fetchOpenWeatherData(city, inCelsius)
       .then((data) => {
         setWeatherData(data);
         setCardState('READY');
@@ -52,7 +53,7 @@ const WeatherCard: React.FC<{ city: string; onDelete?: () => void }> = ({
         setCardState('ERROR');
         console.error(err);
       });
-  }, [city]);
+  }, [city, inCelsius]);
 
   if (cardState === 'LOADING' || cardState === 'ERROR') {
     return (

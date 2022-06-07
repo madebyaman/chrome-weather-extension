@@ -1,5 +1,11 @@
 export interface LocalStorage {
   cities?: string[];
+  options?: LocalStorageOptions;
+}
+
+export interface LocalStorageOptions {
+  inCelsius: boolean;
+  homeCity: string;
 }
 
 export type LocalStorageKeys = keyof LocalStorage;
@@ -16,6 +22,22 @@ export function getStoredCities(): Promise<string[]> {
   return new Promise((resolve) => {
     chrome.storage.local.get(keys, (res: LocalStorage) => {
       resolve(res.cities || []);
+    });
+  });
+}
+
+export function setStoredOptions(options: LocalStorageOptions): Promise<void> {
+  const vals: LocalStorage = { options };
+  return new Promise((res) => {
+    chrome.storage.local.set(vals, () => res());
+  });
+}
+
+export function getStoredOptions(): Promise<LocalStorageOptions> {
+  const keys: LocalStorageKeys[] = ['options'];
+  return new Promise((resolve) => {
+    chrome.storage.local.get(keys, (res: LocalStorage) => {
+      resolve(res.options);
     });
   });
 }

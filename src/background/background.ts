@@ -1,5 +1,6 @@
-import { storeCities } from '../utils/storage';
+import { setStoredOptions, storeCities } from '../utils/storage';
 
 chrome.runtime.onInstalled.addListener(() => {
   storeCities([]);
+  setStoredOptions({ inCelsius: true, homeCity: '' });
 });

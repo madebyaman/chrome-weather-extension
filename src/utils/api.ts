@@ -23,10 +23,13 @@ export interface OpenWeatherData {
 }
 
 export async function fetchOpenWeatherData(
-  city: string
+  city: string,
+  inCelsius: boolean
 ): Promise<OpenWeatherData> {
   const res = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${OPEN_WEATHER_API_KEY}`
+    `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=${
+      inCelsius ? 'metric' : 'imperial'
+    }&appid=${OPEN_WEATHER_API_KEY}`
   );
   if (!res.ok) {
     throw new Error('City not found');
