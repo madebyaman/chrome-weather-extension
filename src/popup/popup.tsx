@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './popup.css';
-import { WeatherCard } from './WatherCard';
+import { WeatherCard } from '../components/WatherCard';
 import {
   Grid,
   InputBase,
