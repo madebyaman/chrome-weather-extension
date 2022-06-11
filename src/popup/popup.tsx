@@ -28,6 +28,7 @@ const App: React.FC<{}> = () => {
   const [options, setOptions] = useState<LocalStorageOptions>({
     inCelsius: true,
     homeCity: '',
+    hasAutoOverlay: false,
   });
 
   useEffect(() => {

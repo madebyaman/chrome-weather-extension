@@ -14,6 +14,7 @@ const App: React.FC<{}> = () => {
   const [options, setOptions] = useState<LocalStorageOptions>({
     inCelsius: true,
     homeCity: '',
+    hasAutoOverlay: false,
   });
   const [formState, setFormState] = useState<FormState>('READY');
 
@@ -56,6 +57,16 @@ const App: React.FC<{}> = () => {
               value={options.homeCity}
               onChange={handleHomeCityChange}
               placeholder="Enter your home city"
+            />
+          </label>
+          <label>
+            Auto Overlay
+            <input
+              type="checkbox"
+              checked={options.hasAutoOverlay}
+              onChange={(e) =>
+                setOptions({ ...options, hasAutoOverlay: e.target.checked })
+              }
             />
           </label>
           <button disabled={formState === 'SAVING'}>

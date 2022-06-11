@@ -6,6 +6,7 @@ export interface LocalStorage {
 export interface LocalStorageOptions {
   inCelsius: boolean;
   homeCity: string;
+  hasAutoOverlay: boolean;
 }
 
 export type LocalStorageKeys = keyof LocalStorage;
