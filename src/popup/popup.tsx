@@ -21,6 +21,7 @@ import {
   storeCities,
 } from '../utils/storage';
 import '@fontsource/roboto';
+import { Messages } from '../utils/messages';
 
 const App: React.FC<{}> = () => {
   const [cities, setCities] = useState<string[]>([]);
@@ -60,6 +61,19 @@ const App: React.FC<{}> = () => {
     });
   }
 
+  function handleOverlayButtonClick() {
+    chrome.tabs.query(
+      {
+        active: true,
+      },
+      (tabs) => {
+        if (tabs.length) {
+          chrome.tabs.sendMessage(tabs[0].id, Messages.TOGGLE_OVERLAY);
+        }
+      }
+    );
+  }
+
   return (
     <Box mx="8px" my="16px">
       <Grid container>
@@ -85,6 +99,9 @@ const App: React.FC<{}> = () => {
                   label="Celsius"
                 />
               </FormGroup>
+              <button onClick={handleOverlayButtonClick}>
+                Picture in picture
+              </button>
             </Box>
           </Paper>
         </Grid>
