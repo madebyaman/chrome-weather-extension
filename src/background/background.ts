@@ -15,6 +15,10 @@ chrome.runtime.onInstalled.addListener(() => {
     title: 'Add city to weather',
     id: 'weatherExtension',
   });
+
+  chrome.alarms.create({
+    periodInMinutes: 60,
+  });
 });
 
 chrome.contextMenus.onClicked.addListener((e) => {
@@ -23,13 +27,15 @@ chrome.contextMenus.onClicked.addListener((e) => {
   });
 });
 
-getStoredOptions().then((options) => {
-  if (!options.homeCity) return;
-  fetchOpenWeatherData(options.homeCity, options.inCelsius).then((data) => {
-    const temp = Math.round(data.main.temp);
-    const symbol = options.inCelsius ? '\u2103' : '\u2109';
-    chrome.action.setBadgeText({
-      text: `${temp}${symbol}`,
+chrome.alarms.onAlarm.addListener(() => {
+  getStoredOptions().then((options) => {
+    if (!options.homeCity) return;
+    fetchOpenWeatherData(options.homeCity, options.inCelsius).then((data) => {
+      const temp = Math.round(data.main.temp);
+      const symbol = options.inCelsius ? '\u2103' : '\u2109';
+      chrome.action.setBadgeText({
+        text: `${temp}${symbol}`,
+      });
     });
   });
 });

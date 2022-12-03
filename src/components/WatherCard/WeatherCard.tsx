@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { fetchOpenWeatherData, OpenWeatherData } from '../../utils/api';
+import {
+  fetchOpenWeatherData,
+  getWeatherIconsSrc,
+  OpenWeatherData,
+} from '../../utils/api';
 import './WeatherCard.css';
 import {
   Card,
@@ -76,6 +80,12 @@ const WeatherCard: React.FC<{
       <Typography variant="body1">
         Feels like: {Math.round(weatherData.main.feels_like)}
       </Typography>
+      {weatherData.weather.length && (
+        <>
+          <img src={getWeatherIconsSrc(weatherData.weather[0].icon)} />
+          <p>{weatherData.weather[0].main}</p>
+        </>
+      )}
     </WeatherCardContainer>
   );
 };
