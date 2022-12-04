@@ -7,6 +7,7 @@ import {
   setStoredOptions,
 } from '../utils/storage';
 import styled from '@emotion/styled';
+import { Messages } from '../utils/messages';
 
 type FormState = 'READY' | 'SAVING';
 
@@ -86,13 +87,15 @@ const App: React.FC<{}> = () => {
   }
 
   function handleOptionsSubmit(e: React.FormEvent<HTMLFormElement>) {
+    setFormState('SAVING');
     e.preventDefault();
     setStoredOptions(options).then(() => {
+      // Why timeout to add artificial feedback for saving
       setTimeout(() => {
         setFormState('READY');
       }, 1000);
+      chrome.runtime.sendMessage(Messages.OPTIONS_SAVED);
     });
-    // show success message
   }
 
   if (!options) {

@@ -5,6 +5,7 @@ import {
   storeCities,
 } from '../utils/storage';
 import { fetchOpenWeatherData } from '../utils/api';
+import { Messages } from '../utils/messages';
 
 chrome.runtime.onInstalled.addListener(() => {
   storeCities([]);
@@ -27,7 +28,7 @@ chrome.contextMenus.onClicked.addListener((e) => {
   });
 });
 
-chrome.alarms.onAlarm.addListener(() => {
+function updateBadgetText() {
   getStoredOptions().then((options) => {
     if (!options.homeCity) return;
     fetchOpenWeatherData(options.homeCity, options.inCelsius).then((data) => {
@@ -38,4 +39,11 @@ chrome.alarms.onAlarm.addListener(() => {
       });
     });
   });
+}
+
+chrome.alarms.onAlarm.addListener(updateBadgetText);
+chrome.runtime.onMessage.addListener((message) => {
+  if (message.data === Messages.OPTIONS_SAVED) {
+    updateBadgetText();
+  }
 });
