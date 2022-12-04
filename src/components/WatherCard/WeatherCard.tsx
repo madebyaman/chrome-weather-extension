@@ -4,7 +4,6 @@ import {
   getWeatherIconsSrc,
   OpenWeatherData,
 } from '../../utils/api';
-import './WeatherCard.css';
 import {
   Card,
   CardActions,
@@ -18,7 +17,21 @@ import styled from '@emotion/styled';
 const Flex = styled.div`
   display: flex;
   align-items: center;
-  gap: 5px;
+  justify-content: space-around;
+  gap: 0.5rem;
+`;
+
+const ColumnFlex = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+`;
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: space-around;
 `;
 
 const WeatherCardContainer: React.FC<{
@@ -26,7 +39,7 @@ const WeatherCardContainer: React.FC<{
   onDelete?: () => void;
 }> = ({ children, onDelete }) => {
   return (
-    <Box mx={'4px'} my="16px">
+    <Box mx={'0.4rem'} my="1.6rem" style={{ fontSize: '62.5%' }}>
       <Card>
         <CardContent>{children}</CardContent>
         {onDelete && (
@@ -92,30 +105,32 @@ const WeatherCard: React.FC<{
 
   return (
     <WeatherCardContainer onDelete={onDelete}>
-      <div>
-        <Flex>
-          <Typography marginLeft={'10'} variant="h5">
-            {city}
+      <Grid>
+        <ColumnFlex>
+          <Flex>
+            <Typography marginLeft={'10'} variant="h5">
+              {city}
+            </Typography>
+            <Typography variant="body1">
+              {getCountryFlagEmoji(weatherData.sys.country)}
+            </Typography>
+          </Flex>
+          <Typography variant="subtitle1" style={{ fontSize: '3.6rem' }}>
+            {Math.round(weatherData.main.temp)}
           </Typography>
           <Typography variant="body1">
-            {getCountryFlagEmoji(weatherData.sys.country)}
+            Feels like: {Math.round(weatherData.main.feels_like)}
           </Typography>
-        </Flex>
+        </ColumnFlex>
         {weatherData.weather.length && (
-          <Flex>
+          <ColumnFlex>
+            <img src={getWeatherIconsSrc(weatherData.weather[0].icon)} />
             <Typography variant="body1">
               {weatherData.weather[0].main}
             </Typography>
-            <img src={getWeatherIconsSrc(weatherData.weather[0].icon)} />
-          </Flex>
+          </ColumnFlex>
         )}
-        <Typography variant="body1">
-          Temperature: {Math.round(weatherData.main.temp)}
-        </Typography>
-        <Typography variant="body1">
-          Feels like: {Math.round(weatherData.main.feels_like)}
-        </Typography>
-      </div>
+      </Grid>
     </WeatherCardContainer>
   );
 };
