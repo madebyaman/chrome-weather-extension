@@ -11,8 +11,9 @@ import {
   FormControlLabel,
   FormGroup,
   Switch,
+  Card,
 } from '@mui/material';
-import { Add as AddIcon } from '@mui/icons-material';
+import { Add as AddIcon, PictureInPicture } from '@mui/icons-material';
 import {
   getStoredCities,
   getStoredOptions,
@@ -22,6 +23,12 @@ import {
 } from '../utils/storage';
 import '@fontsource/roboto';
 import { Messages } from '../utils/messages';
+import styled from '@emotion/styled';
+
+const FlexBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
 const App: React.FC<{}> = () => {
   const [cities, setCities] = useState<string[]>([]);
@@ -76,36 +83,34 @@ const App: React.FC<{}> = () => {
 
   return (
     <Box mx="8px" my="16px">
-      <Grid container>
-        <Grid item>
-          <Paper>
-            <Box px="15px" py="5px">
-              <InputBase
-                placeholder="Add a city name"
-                value={cityInput}
-                onChange={(e) => setCityInput(e.target.value)}
-              />
-              <IconButton onClick={handleCityButtonClick}>
-                <AddIcon />
-              </IconButton>
-              <FormGroup>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={options.inCelsius}
-                      onChange={handleCelsiusSwitchChange}
-                    />
-                  }
-                  label="Celsius"
+      <Card>
+        <Box px="15px" py="5px">
+          <FlexBox>
+            <InputBase
+              placeholder="Add a city name"
+              value={cityInput}
+              onChange={(e) => setCityInput(e.target.value)}
+            />
+            <IconButton onClick={handleCityButtonClick}>
+              <AddIcon />
+            </IconButton>
+          </FlexBox>
+          <FlexBox>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={options.inCelsius}
+                  onChange={handleCelsiusSwitchChange}
                 />
-              </FormGroup>
-              <button onClick={handleOverlayButtonClick}>
-                Picture in picture
-              </button>
-            </Box>
-          </Paper>
-        </Grid>
-      </Grid>
+              }
+              label="Celsius"
+            />
+            <IconButton onClick={handleOverlayButtonClick}>
+              <PictureInPicture />
+            </IconButton>
+          </FlexBox>
+        </Box>
+      </Card>
       {options.homeCity !== '' && (
         <WeatherCard city={options.homeCity} inCelsius={options.inCelsius} />
       )}
