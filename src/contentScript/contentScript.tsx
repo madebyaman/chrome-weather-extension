@@ -8,6 +8,15 @@ import {
   LocalStorageOptions,
   setStoredOptions,
 } from '../utils/storage';
+import styled from '@emotion/styled';
+import Draggable from 'react-draggable';
+
+const Container = styled.div`
+  position: fixed;
+  top: 100px;
+  left: 200px;
+  z-index: 9999;
+`;
 
 const App: React.FC<{}> = () => {
   const [options, setOptions] = useState<LocalStorageOptions | null>(null);
@@ -40,11 +49,15 @@ const App: React.FC<{}> = () => {
   return (
     <>
       {isActive && (
-        <WeatherCard
-          city={options.homeCity}
-          inCelsius={options.inCelsius}
-          onDelete={handleDeleteButtonClick}
-        />
+        <Draggable defaultPosition={{ x: 0, y: 0 }} scale={1}>
+          <Container>
+            <WeatherCard
+              city={options.homeCity}
+              inCelsius={options.inCelsius}
+              onDelete={handleDeleteButtonClick}
+            />
+          </Container>
+        </Draggable>
       )}
     </>
   );
