@@ -43,7 +43,7 @@ function updateBadgetText() {
 
 chrome.alarms.onAlarm.addListener(updateBadgetText);
 chrome.runtime.onMessage.addListener((message) => {
-  if (message.data === Messages.OPTIONS_SAVED) {
+  if (message === Messages.OPTIONS_SAVED) {
     updateBadgetText();
   }
 });
