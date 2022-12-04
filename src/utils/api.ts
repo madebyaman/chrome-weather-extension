@@ -20,6 +20,13 @@ export interface OpenWeatherData {
     deg: number;
     speed: number;
   };
+  dt: number;
+  sys: {
+    sunrise: number;
+    sunset: number;
+    country: string;
+  };
+  timezone: number;
 }
 
 export async function fetchOpenWeatherData(
